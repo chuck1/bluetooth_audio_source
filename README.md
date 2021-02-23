@@ -16,3 +16,15 @@ AVDTP uses L2CAP channels to communicate.
 Researching L2CAP has been frustrating. 
 I have found BT devices that say they include a L2CAP stack but I find no reference of how to command those devices to create L2CAP channels.
 
+# Promising Devices
+
+* RN4678
+* BM83
+
+# Research TODO
+
+* read core spec HCI commands regarding L2CAP
+* for a device that says it contains an L2CAP stack, can you send standard HCI commands to control the L2CAP functionality? Does that make sense?
+* Can standard HCI commands be used to implement L2CAP/AVDTOP/A2DP?
+
+
