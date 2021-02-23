@@ -1,6 +1,6 @@
 # Bluetooth Audio Source
 
-To stream audio you need a bluetooth module or IC that support BDR/BR, sometimes called classic. Bluetooth Low Energy (BLE) is not meant for audio streaming.
+To stream audio you need a bluetooth module or IC that support EDR/BR, sometimes called classic. Bluetooth Low Energy (BLE) is not meant for audio streaming.
 
 Bluetooth devices usually have a serial command set that an external MCU can use to control the device.
 There is something called HCI. 
