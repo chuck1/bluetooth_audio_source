@@ -20,6 +20,7 @@ I have found BT devices that say they include a L2CAP stack but I find no refere
 
 * RN4678
 * BM83
+* RN42 (old, replaced by RN4678)
 
 # Research TODO
 
