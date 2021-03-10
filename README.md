@@ -105,4 +105,42 @@ I have found BT devices that say they include a L2CAP stack but I find no refere
 * for a device that says it contains an L2CAP stack, can you send standard HCI commands to control the L2CAP functionality? Does that make sense?
 * Can standard HCI commands be used to implement L2CAP/AVDTOP/A2DP?
 
+## Parts
+
+### Pickup Wire
+
+Typically 42 or 43 AWG copper with poly coating. Sold in spools of about 25000 feet. 
+That is enough for 4-5 regular pickups or 2-3 humbucker pickups.
+
+### Pickup magnets
+
+typically Alnico 5, 5 mm (0.195 inch) diameter by 16 to 18 mm (.6 to .7 inch) long
+
+## Sourcing
+
+## Blog
+
+### 2021-03-09
+
+Tried out my python analog plotter, works well.
+
+Output of the 741 seems to be limited to a narrow rage around 4V.
+
+### 2021-03-10
+
+Asked about my op amp issues on electronics stack exchange.
+Got answers.
+The 741 is an old design and is designed to be used with a much larger source voltage, something like +/- 12 or 18 V.
+They suggested getting a modern rail-to-rail op amp (possibly CMOS) with approapriate source voltage.
+
+
+
+
+
+
+
+
+
+
+
 

@@ -11,7 +11,7 @@ sample_size = 64
 channels = 3
 packet_size = sample_size * arduino_size_int * channels
 
-plot_width = sample_size * 20
+plot_width = sample_size * 60
 
 
 
@@ -111,16 +111,19 @@ ax_1.set_ylim(0, 1024)
 
 V_0 = []
 
-line_0, = ax.plot([], [], 'ro')
-line_1, = ax.plot([], [], 'go')
-line_2, = ax.plot([], [], 'bo')
+line_0, = ax.plot([], [], 'ro', markersize=2)
+line_1, = ax.plot([], [], 'go', markersize=2)
+line_2, = ax.plot([], [], 'bo', markersize=2)
 
 lines_b = [
-    ax_1.plot([], [], 'ro')[0],
-    ax_1.plot([], [], 'go')[0],
-    ax_1.plot([], [], 'bo')[0],
+    ax_1.plot([], [], 'ro', markersize=2, label="A4 (non-inv input)")[0],
+    ax_1.plot([], [], 'go', markersize=2, label="A5 (inv input)")[0],
+    ax_1.plot([], [], 'bo', markersize=2, label="A3 (output)")[0],
     ]
-    
+
+ax_1.set_xlabel("A4")
+ax_1.set_ylabel("A3, A5")
+plt.legend()
 
 def update():
 
@@ -168,6 +171,8 @@ def update():
 ##################
 
 #plt.ion()
+
+
 
 plt.show(block=False)
 
