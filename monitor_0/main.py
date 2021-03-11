@@ -71,8 +71,8 @@ class Foo:
     
     def read(self):
 
-        #b = self.ser.read(packet_size)
-        b = self.construct()
+        b = self.ser.read(packet_size)
+        #b = self.construct()
 
         a = np.array(struct.unpack(self.fmt, b))
 
@@ -105,7 +105,7 @@ ax.set_ylim(0, 1024)
 
 fig_1, ax_1 = plt.subplots()
 
-ax_1.set_xlim(0, 1024)
+ax_1.set_xlim(0, 30)
 ax_1.set_ylim(0, 1024)
 
 
