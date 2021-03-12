@@ -133,7 +133,12 @@ Got answers.
 The 741 is an old design and is designed to be used with a much larger source voltage, something like +/- 12 or 18 V.
 They suggested getting a modern rail-to-rail op amp (possibly CMOS) with approapriate source voltage.
 
+### 2021-03-11
 
+Hookup up KA386. Getting gain of 20 as advertised. Only getting output range of about 300 analog read.
+
+Tried increasing gain to 200, no luck. Might have destroyed capacitor.
+Try another capacitor oriented properly and try a connecting bypass pin to group with capacitor.
 
 
 
