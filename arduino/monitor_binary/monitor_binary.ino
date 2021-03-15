@@ -5,7 +5,7 @@ int analog_pin_non_inv_input = A4;
 int analog_pin_output = A3;
 
 //long baud_rate = 115200;
-long baud_rate = 9600;
+long baud_rate = 19200;
 
 const unsigned long buffer_size = 64;
 

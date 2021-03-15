@@ -28,7 +28,7 @@ class Foo:
         self.fmt = f"{sample_size * channels}h"
 
         try:
-            self.ser = serial.Serial('COM3', 9600)
+            self.ser = serial.Serial('COM3', 19200)
         except Exception as ex:
             print(ex)
             

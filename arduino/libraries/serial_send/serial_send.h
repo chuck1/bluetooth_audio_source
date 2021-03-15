@@ -14,20 +14,25 @@ class SerialSend
 		{
 			if(buffer_size > 0)
 			{
-				_buffer = new T[buffer_size];
+				_buffer = new T[buffer_size + 1];
+				
+				for(unsigned int i = 0; i < sizeof(T); ++i)
+				{
+					*(((byte*)_buffer) + i) = 0x80;
+				}
 			}
 		}
 		void send(T const & t)
 		{
 			if(_buffer_size > 0)
 			{
-				_buffer[_write_head] = t;
+				_buffer[_write_head + 1] = t;
 				
 				_write_head += 1;
 				
 				if(_write_head == _buffer_size)
 				{
-					Serial.write((byte*)_buffer, _buffer_size * sizeof(T));
+					Serial.write((byte*)_buffer, (_buffer_size + 1) * sizeof(T));
 					
 					_write_head = 0;
 				}
