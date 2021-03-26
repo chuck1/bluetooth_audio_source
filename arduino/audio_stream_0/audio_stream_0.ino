@@ -7,12 +7,12 @@ long sample_rate = 44100 / 10;
 
 struct Sample
 {
-  int val;
+  byte val;
 };
 
 Sample sample;
 
-SerialSend<Sample> serial_write(32);
+SerialSend<Sample> serial_write(false, 32);
 
 Rate rate(sample_rate);
 
@@ -22,8 +22,12 @@ void setup() {
 
 void loop() {
   if(rate.ready())
-  {  
-    sample.val = analogRead(analogPin);
+  {
+    int x16 = analogRead(analogPin);
+
+    x16 -= 270 - 128;
+    
+    sample.val = x16;
     serial_write.send(sample);
   }
 }

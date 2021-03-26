@@ -7,7 +7,7 @@ int analog_pin_output = A3;
 //long baud_rate = 115200;
 long baud_rate = 19200;
 
-const unsigned long buffer_size = 64;
+
 
 struct Sample
 {
@@ -18,7 +18,7 @@ struct Sample
 
 Sample sample;
 
-SerialSend<Sample> serial_send(buffer_size);
+SerialSend<Sample> serial_send(false, 32);
 
 void setup() {
   Serial.begin(baud_rate);

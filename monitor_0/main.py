@@ -7,31 +7,34 @@ import numpy as np
 import scipy.signal
 
 arduino_size_int = 2
-sample_size = 64
-channels = 3
-packet_size = sample_size * arduino_size_int * channels
-
-plot_width = sample_size * 60
 
 
 
 class Foo:
-    def __init__(self):
+    def __init__(self, channels, samples, plot_width):
+        
+        self.channels = channels
+        self.samples = samples
+
+        self.packet_size = samples * arduino_size_int * channels
+        
+        self.plot_width = plot_width #samples * 60
+
+        
         self.t = 0
         self.t_offset = 0
 
         self.T = []
-        self.V_0 = []
-        self.V_1 = []
-        self.V_2 = []
-
-        self.fmt = f"{sample_size * channels}h"
-
+        self.V = [[],[],[]]
+        
+        self.fmt = f"{samples * channels}h"
+        
+        self.ser = None
         try:
             self.ser = serial.Serial('COM3', 19200)
         except Exception as ex:
             print(ex)
-            
+        
 
     def construct(self):
 
@@ -44,7 +47,7 @@ class Foo:
             G = 2
             return max(min(V_ip * G, 820), 720)
 
-        T = np.arange(sample_size) + self.t
+        T = np.arange(self.samples) + self.t
 
         V_non_inv_input = scipy.signal.sawtooth(T * 0.005, width=0.5) * 500 + 500
         
@@ -70,19 +73,18 @@ class Foo:
         return struct.pack(self.fmt, *[int(_) for _ in b.tolist()])
     
     def read(self):
-
-        b = self.ser.read(packet_size)
-        #b = self.construct()
-
-        a = np.array(struct.unpack(self.fmt, b))
-
+        if self.ser is not None:
+            b = self.ser.read(self.packet_size)
+        else:
+            b = self.construct()
         
+        a = np.array(struct.unpack(self.fmt, b))
         
         #print(np.shape(a))
-
-        T = np.arange(sample_size) + self.t - self.t_offset
         
-        self.t += sample_size
+        T = np.arange(self.samples) + self.t - self.t_offset
+        
+        self.t += self.samples
         
         V_inv_input = a[0::3]
         V_non_inv_input = a[1::3]
@@ -92,93 +94,91 @@ class Foo:
         #print(np.shape(V_inv_input))
         #print(np.shape(V_non_inv_input))
 
+        return T, [V_inv_input, V_non_inv_input, V_output]
+
         
 
-        return T, V_inv_input, V_non_inv_input, V_output        
+    def update(self):
 
-foo = Foo()
-
-fig, ax = plt.subplots()
-
-ax.set_xlim(0, plot_width)
-ax.set_ylim(0, 1024)
-
-fig_1, ax_1 = plt.subplots()
-
-ax_1.set_xlim(0, 30)
-ax_1.set_ylim(0, 1024)
-
-
-V_0 = []
-
-line_0, = ax.plot([], [], 'ro', markersize=2)
-line_1, = ax.plot([], [], 'go', markersize=2)
-line_2, = ax.plot([], [], 'bo', markersize=2)
-
-lines_b = [
-    ax_1.plot([], [], 'ro', markersize=2, label="A4 (non-inv input)")[0],
-    ax_1.plot([], [], 'go', markersize=2, label="A5 (inv input)")[0],
-    ax_1.plot([], [], 'bo', markersize=2, label="A3 (output)")[0],
-    ]
-
-ax_1.set_xlabel("A4")
-ax_1.set_ylabel("A3, A5")
-plt.legend()
-
-def update():
-
-    T_temp, d_0, d_1, d_2 = foo.read()
-    
-    foo.T = np.concatenate((foo.T, T_temp))
-    foo.V_0 = np.concatenate((foo.V_0, d_0))
-    foo.V_1 = np.concatenate((foo.V_1, d_1))
-    foo.V_2 = np.concatenate((foo.V_2, d_2))
-
-    w = np.shape(foo.T)[0]
-
-    
-    
-    if w > plot_width:
-        foo.T = foo.T[plot_width:]
-        foo.V_0 = foo.V_0[plot_width:]
-        foo.V_1 = foo.V_1[plot_width:]
-        foo.V_2 = foo.V_2[plot_width:]
+        T_temp, V = self.read()
         
-        foo.T -= plot_width
-        foo.t_offset += plot_width
+        self.T = np.concatenate((self.T, T_temp))
+
+        for i in range(3):
+            self.V[i] = np.concatenate((self.V[i], V[i]))
+        
+        w = np.shape(self.T)[0]
+        
+        if w > self.plot_width:
+            self.T = self.T[self.plot_width:]
+            for i in range(len(self.V)):
+                self.V[i] = self.V[i][self.plot_width:]
+            
+            self.T -= self.plot_width
+            self.t_offset += self.plot_width
+        
+        #print(np.shape(foo.T))
+        #print(np.shape(foo.V_0))
+
+        #print(foo.T)
+
+        for i in range(len(self.V)):
+            self.lines_a[i].set_data(self.T, self.V[i])
+            self.lines_b[i].set_data(self.V[1], self.V[i])
+        
+        
+        self.fig.canvas.draw()
+        self.fig.canvas.flush_events()
+        
+
+        
+
+    def setup_plots(self, xlim_1):
+
+        
+        self.fig, (ax_0, ax_1) = plt.subplots(1, 2)
+
+        ax_0.set_xlim(0, self.plot_width)
+        ax_0.set_ylim(0, 1024)
+
+        ax_1.set_xlim(xlim_1)
+        ax_1.set_ylim(0, 1024)
+
+        V_0 = []
+
+        self.lines_a = [
+            ax_0.plot([], [], 'ro', markersize=2)[0],
+            ax_0.plot([], [], 'go', markersize=2)[0],
+            ax_0.plot([], [], 'bo', markersize=2)[0],
+            ]
+
+        self.lines_b = [
+            ax_1.plot([], [], 'ro', markersize=2, label="A4 (non-inv input)")[0],
+            ax_1.plot([], [], 'go', markersize=2, label="A5 (inv input)")[0],
+            ax_1.plot([], [], 'bo', markersize=2, label="A3 (output)")[0],
+            ]
+
+        ax_1.set_xlabel("A4")
+        ax_1.set_ylabel("A3, A5")
+        
+        plt.legend()        
+
+#########################
+
+def main(xlim_1=[0, 1024]):
+
+    foo = Foo(3, 32, 2000)
+
+    foo.setup_plots(xlim_1)
     
-    #print(np.shape(foo.T))
-    #print(np.shape(foo.V_0))
+    plt.show(block=False)
 
-    #print(foo.T)
-    
-    line_0.set_data(foo.T, foo.V_0)
-    line_1.set_data(foo.T, foo.V_1)
-    line_2.set_data(foo.T, foo.V_2)
+    while True:
+        foo.update()
 
-    lines_b[0].set_data(foo.V_1, foo.V_1)
-    lines_b[1].set_data(foo.V_1, foo.V_0)
-    lines_b[2].set_data(foo.V_1, foo.V_2)
-    
-    
-    fig.canvas.draw()
-    fig.canvas.flush_events()
-    fig_1.canvas.draw()
-    fig_1.canvas.flush_events()
+########################
 
-    return line_0, line_1, line_2,
-
-##################
-
-#plt.ion()
-
-
-
-plt.show(block=False)
-
-while True:
-    update()
-
+main()
 
 
 

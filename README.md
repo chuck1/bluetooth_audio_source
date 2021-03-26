@@ -40,6 +40,12 @@ See discussion of BT module below.
 
 ## Plan
 
+High level:
+
+* develop pickup and electronics to the point where I get decent quality sound over USB
+* build guitar out of relatively inexpensive wood (though must still get dry stock)
+* work on bluetooth
+
 ### Proof of Concept: Pickup
 
 I am going to build a crude pickup using some magnets I have on hand and wire I salvaged from a small electric motor.

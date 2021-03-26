@@ -3,7 +3,7 @@
 
 int analogPin = A3;
 
-long sample_rate = 44100 / 10;
+long sample_rate = 44100 / 20;
 
 struct Sample
 {
@@ -12,7 +12,7 @@ int val;
 
 Sample sample;
 
-SerialSend<Sample> serial_write(32);
+SerialSend<Sample> serial_write(true, 8);
 
 Rate rate(sample_rate);
 
@@ -21,8 +21,8 @@ long counter = 0;
 
 void setup()
 {
-  //Serial.begin(115200);
-  Serial.begin(128000);
+  Serial.begin(115200);
+  //Serial.begin(128000);
 }
 
 int sine()
