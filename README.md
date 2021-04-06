@@ -129,7 +129,7 @@ typically Alnico 5, 5 mm (0.195 inch) diameter by 16 to 18 mm (.6 to .7 inch) lo
 
 ## Sourcing
 
-## Blog
+## Updates
 
 ### 2021-03-09
 
@@ -151,7 +151,9 @@ Hookup up KA386. Getting gain of 20 as advertised. Only getting output range of 
 Tried increasing gain to 200, no luck. Might have destroyed capacitor.
 Try another capacitor oriented properly and try a connecting bypass pin to group with capacitor.
 
+### 2021-03-27
 
+Decided to change the approach. Decided to buy an electric guitar and then (at least for the first prototype) build the device external to the guitar. So I bought a used Yamaha EG 112 and have been learning to play (since I've never played before). My plan is two buy the electronics and start working on the device later this year.
 
 
 
