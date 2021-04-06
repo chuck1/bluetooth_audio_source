@@ -33,8 +33,11 @@ digraph
 	// OUT
 	ESP32 -> BT_sink [label="bluetooth EDR"]
 	DAC -> JACK1 -> AMP
-	
 
-	
+	// both
+	SMARTPHONE -> ESP32 [label="BLE", dir=both];
+	MCU -> PC [label="ethernet", dir=both];
+	MCU -> PC [label="USB", dir=both];
+
 }
 
