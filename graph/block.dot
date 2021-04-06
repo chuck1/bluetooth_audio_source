@@ -1,8 +1,18 @@
 digraph
 {
-	MCU
-	BT
+	dir=LR;	
 
-	MCU -> BT
+	ADC
+	MCU
+	ESP32
+	DAC
+	
+	ADC -> MCU [label="SPI"];
+	MCU -> ESP32 [label="SPI"];
+
+	ESP32 -> BT_sink [label="bluetooth EDR"]
+	ESP32 -> BT_source [label="bluetooth EDR"]
+	
+	
 }
 
