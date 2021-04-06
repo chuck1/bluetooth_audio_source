@@ -1,7 +1,31 @@
 
 # Guitar
 
-In this project I am setting out to build a digital electric guitar. 
+## Overview
+
+I am setting out to build a digital device which takes the analog signal from the pickups of an electric guitar and turns it into a digital singal which can be modified (to create effects), stored, played back, and transmitted to multiple digital audio endpoint such as a bluetooth speaker or a PC.
+
+Features:
+
+* Bluetooth audio source or sink
+* Record and playback
+* Upload audio file to device storage and playback (backing track)
+* Programmable effects
+* Builtin metronome
+
+IO:
+
+* Bluetooth EDR and BLE (in and out)
+* 6.35 mm jack for analog in (from guitar or amp)
+* 6.35 mm jack for analog out (to amp)
+* Ethernet
+* WIFI
+* USB
+
+## Block diagram
+
+![](graph/block.svg)
+
 I know there are products in existance that are called digital electric guitars but I dont know if my definition is the same.
 My device will work as follows
 
