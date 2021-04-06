@@ -26,25 +26,6 @@ IO:
 
 ![](graph/block.svg)
 
-I know there are products in existance that are called digital electric guitars but I dont know if my definition is the same.
-My device will work as follows
-
-    pickup                         OPTIONAL               
-    (just like      --> OP AMP --> dedicated ADC chip --> microcontroller --> bluetooth module ))) -> bluetooth speaker
-    tradtional
-    electric guitar)                                        ^
-                                                            |
-                                         -------------------+
-                                         |                  |
-                                         v                  v
-                                      OPTIONAL             OPTIONAL
-                                      memory chip for      FPGA for fast DSP
-                                      playback and other
-
-The pickup will be constructed just like a traditional electric guitar pickup.
-I dont know if I will need or want a humbucker pickup or multiple pickups.
-I dont yet know the purpose of having multiple pickups.
-
 The OP AMP will increase the voltage of the signal from the pick, which should be in the 10s to 100s of millivolts.
 It will be increased to the range of the ADC which will be a few volts.
 

@@ -1,7 +1,8 @@
 digraph
 {
 	rankdir=LR;	
-
+	
+	OPAMP
 	ADC
 	MCU
 	ESP32
@@ -17,22 +18,26 @@ digraph
 	PC [label="PC"; color="#cccccc"];
 	SMARTPHONE [label="smartphone"; color="#cccccc"];
 
+	OPAMP0 -> ADC
+	DAC -> OPAMP1
 	ADC -> MCU [label="SPI"];
 	MCU -> DAC [label="SPI"];
 
 	MCU -> ESP32 [label="SPI";dir=both];
 	MCU -> FLASH [label="SPI?";dir=both];
 	
+	OPAMP1 -> JACK1
+	JACK0 -> OPAMP0
+
 	// IN
 	BT_source -> ESP32 [label="bluetooth EDR"]
 	
 	PICKUP -> JACK0
 	AMP -> JACK0
-	JACK0 -> ADC
 	
 	// OUT
 	ESP32 -> BT_sink [label="bluetooth EDR"]
-	DAC -> JACK1 -> AMP
+	JACK1 -> AMP
 
 	// both
 	SMARTPHONE -> ESP32 [label="BLE", dir=both];
