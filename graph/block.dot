@@ -2,7 +2,8 @@ digraph
 {
 	rankdir=LR;	
 	
-	OPAMP
+	OPAMP0
+	OPAMP1
 	ADC
 	MCU
 	ESP32
