@@ -1,0 +1,8 @@
+digraph
+{
+	MCU
+	BT
+
+	MCU -> BT
+}
+
