@@ -1,17 +1,22 @@
 digraph
 {
-	dir=LR;	
+	rankdir=LR;	
 
 	ADC
 	MCU
 	ESP32
 	DAC
-	
+	BT_source
+	BT_sink
+	FLASH [color="#cccccc"];
+		
 	ADC -> MCU [label="SPI"];
 	MCU -> ESP32 [label="SPI"];
+	MCU -> DAC [label="SPI"];
+	MCU -> FLASH [label="SPI?";dir=both];
 
 	ESP32 -> BT_sink [label="bluetooth EDR"]
-	ESP32 -> BT_source [label="bluetooth EDR"]
+	BT_source -> ESP32 [label="bluetooth EDR"]
 	
 	
 }
