@@ -6,18 +6,35 @@ digraph
 	MCU
 	ESP32
 	DAC
-	BT_source
-	BT_sink
-	FLASH [color="#cccccc"];
-		
-	ADC -> MCU [label="SPI"];
-	MCU -> ESP32 [label="SPI"];
-	MCU -> DAC [label="SPI"];
-	MCU -> FLASH [label="SPI?";dir=both];
+	FLASH
+	JACK0 [label="jack0 (6.35 mm jack)"];
+	JACK1 [label="jack1 (6.35 mm jack)"];
 
-	ESP32 -> BT_sink [label="bluetooth EDR"]
+	PICKUP [label="pickup"; color="#cccccc"];
+	AMP [label="amp"; color="#cccccc"];
+	BT_sink [label="BT audio sink"; color="#cccccc"];
+	BT_source [label="BT audio source"; color="#cccccc"];
+	PC [label="PC"; color="#cccccc"];
+	SMARTPHONE [label="smartphone"; color="#cccccc"];
+
+	ADC -> MCU [label="SPI"];
+	MCU -> DAC [label="SPI"];
+
+	MCU -> ESP32 [label="SPI";dir=both];
+	MCU -> FLASH [label="SPI?";dir=both];
+	
+	// IN
 	BT_source -> ESP32 [label="bluetooth EDR"]
 	
+	PICKUP -> JACK0
+	AMP -> JACK0
+	JACK0 -> ADC
+	
+	// OUT
+	ESP32 -> BT_sink [label="bluetooth EDR"]
+	DAC -> JACK1 -> AMP
+	
+
 	
 }
 
